@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTabPane?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<JFXTabPane fx:id="root" maxHeight="860.0" maxWidth="1600.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="860.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Royal_InstituteController">
+   <tabs>
+      <Tab closable="false" text="Students Management">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="850.0" prefWidth="1600.0" style="-fx-background-color: white;">
+               <children>
+                  <TableView fx:id="tblStudents" layoutX="48.0" layoutY="460.0" prefHeight="343.0" prefWidth="1505.0">
+                    <columns>
+                      <TableColumn fx:id="colNIC" prefWidth="174.99996948242188" text="NIC" />
+                      <TableColumn fx:id="colStudentID" prefWidth="216.99996948242188" text="Student ID" />
+                        <TableColumn fx:id="colStudentName" prefWidth="293.0" text="Student Name" />
+                        <TableColumn fx:id="colStudentAddress" prefWidth="298.0" text="Student Address" />
+                        <TableColumn fx:id="colContact" prefWidth="205.0" text="Contact" />
+                        <TableColumn fx:id="colDob" prefWidth="165.0" text="Date of Birth" />
+                        <TableColumn fx:id="colGender" prefWidth="151.0" text="Gender" />
+                    </columns>
+                  </TableView>
+                  <JFXTextField fx:id="txtNIC" layoutX="61.0" layoutY="43.0" prefHeight="31.0" prefWidth="553.0" promptText="NIC" />
+                  <JFXTextField fx:id="txtStudentID" layoutX="58.0" layoutY="90.0" prefHeight="31.0" prefWidth="553.0" promptText="Student ID" />
+                  <JFXTextField fx:id="txtStudentName" layoutX="58.0" layoutY="139.0" prefHeight="31.0" prefWidth="553.0" promptText="Student Name" />
+                  <JFXTextField fx:id="txtStudentAddress" layoutX="58.0" layoutY="186.0" prefHeight="31.0" prefWidth="553.0" promptText="Student Address" />
+                  <JFXTextField fx:id="txtContact" layoutX="58.0" layoutY="243.0" prefHeight="31.0" prefWidth="553.0" promptText="Contact" />
+                  <JFXTextField fx:id="txtDob" layoutX="58.0" layoutY="294.0" prefHeight="31.0" prefWidth="553.0" promptText="Date of Birth" />
+                  <JFXTextField fx:id="txtGender" layoutX="58.0" layoutY="344.0" prefHeight="31.0" prefWidth="553.0" promptText="Gender" />
+                  <JFXButton fx:id="btnAdd" layoutX="735.0" layoutY="43.0" onAction="#btnAddOnAction" style="-fx-background-color: green;" text="Add" />
+                  <JFXButton fx:id="btnUpdate" layoutX="723.0" layoutY="106.0" onAction="#btnUpdateOnAction" style="-fx-background-color: green;" text="Update" />
+                  <JFXButton fx:id="btnDelete" layoutX="735.0" layoutY="171.0" onAction="#btnDeleteOnAction" style="-fx-background-color: green;" text="Delete" />
+               </children></AnchorPane>
+        </content>
+      </Tab>
+      <Tab closable="false" text="Course Management">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefWidth="1600.0" style="-fx-background-color: white;">
+               <children>
+                  <TableView fx:id="tblCourse" layoutX="58.0" layoutY="470.0" prefHeight="343.0" prefWidth="1026.0">
+                     <columns>
+                        <TableColumn fx:id="colNIC1" prefWidth="174.99996948242188" text="Course Code" />
+                        <TableColumn fx:id="colStudentID1" prefWidth="216.99996948242188" text="Course Name" />
+                        <TableColumn fx:id="colStudentName1" prefWidth="293.0" text="Course Fee" />
+                        <TableColumn fx:id="colStudentAddress1" prefWidth="298.0" text="Course Duration" />
+                     </columns>
+                  </TableView>
+                  <JFXTextField fx:id="txtCode" layoutX="77.0" layoutY="31.0" prefHeight="31.0" prefWidth="498.0" promptText="Course Code" />
+                  <JFXTextField fx:id="txtCourseName" layoutX="79.0" layoutY="78.0" prefHeight="31.0" prefWidth="498.0" promptText="Course Name" />
+                  <JFXTextField fx:id="txtCourseFee" layoutX="78.0" layoutY="130.0" prefHeight="31.0" prefWidth="498.0" promptText="Course Fee" />
+                  <JFXTextField fx:id="txtDuration" layoutX="78.0" layoutY="189.0" prefHeight="31.0" prefWidth="498.0" promptText="Duration" />
+                  <JFXButton fx:id="btnCourseAdd" layoutX="715.0" layoutY="39.0" onAction="#btnCourseAddOnAction" style="-fx-background-color: green;" text="Add" />
+                  <JFXButton fx:id="btnCourseUpdate" layoutX="725.0" layoutY="89.0" onAction="#btnCourseUpdateOnAction" style="-fx-background-color: green;" text="Update" />
+                  <JFXButton fx:id="btnCourseDelete" layoutX="735.0" layoutY="142.0" onAction="#btnCourseDeleteOnAction" style="-fx-background-color: green;" text="Delete" />
+               </children></AnchorPane>
+        </content>
+      </Tab>
+      <Tab closable="false" text="Registration Process">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="850.0" style="-fx-background-color: white;" />
+        </content>
+      </Tab>
+      <Tab closable="false" text="Records">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefWidth="1600.0" style="-fx-background-color: white;" />
+        </content>
+      </Tab>
+   </tabs>
+</JFXTabPane>
