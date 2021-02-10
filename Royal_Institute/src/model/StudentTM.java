@@ -1,11 +1,8 @@
-package entity;
+package model;
 
-import javax.persistence.Entity;
 import javax.persistence.Id;
 
-@Entity
-public class Student implements SuperEntity{
-    @Id
+public class StudentTM {
     private String id;
     private String student_name;
     private String address;
@@ -13,10 +10,10 @@ public class Student implements SuperEntity{
     private String  dob;
     private String gender;
 
-    public Student() {
+    public StudentTM() {
     }
 
-    public Student(String id, String student_name, String address, String contact, String dob, String gender) {
+    public StudentTM(String id, String student_name, String address, String contact, String dob, String gender) {
         this.id = id;
         this.student_name = student_name;
         this.address = address;
@@ -75,7 +72,7 @@ public class Student implements SuperEntity{
 
     @Override
     public String toString() {
-        return "Student{" +
+        return "StudentTM{" +
                 "id='" + id + '\'' +
                 ", student_name='" + student_name + '\'' +
                 ", address='" + address + '\'' +

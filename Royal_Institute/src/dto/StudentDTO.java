@@ -1,22 +1,17 @@
-package entity;
+package dto;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-
-@Entity
-public class Student implements SuperEntity{
-    @Id
+public class StudentDTO {
     private String id;
     private String student_name;
     private String address;
     private String contact;
-    private String  dob;
+    private String dob;
     private String gender;
 
-    public Student() {
+    public StudentDTO() {
     }
 
-    public Student(String id, String student_name, String address, String contact, String dob, String gender) {
+    public StudentDTO(String id, String student_name, String address, String contact, String dob, String gender) {
         this.id = id;
         this.student_name = student_name;
         this.address = address;
@@ -75,7 +70,7 @@ public class Student implements SuperEntity{
 
     @Override
     public String toString() {
-        return "Student{" +
+        return "StudentDTO{" +
                 "id='" + id + '\'' +
                 ", student_name='" + student_name + '\'' +
                 ", address='" + address + '\'' +
