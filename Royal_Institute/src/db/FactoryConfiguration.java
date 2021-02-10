@@ -1,5 +1,6 @@
 package db;
 
+import entity.Course;
 import entity.Student;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -18,6 +19,7 @@ public class FactoryConfiguration {
             properties.load(ClassLoader.getSystemClassLoader().getResourceAsStream("Royal_Institute.properties"));
             sessionFactory = new Configuration().mergeProperties(properties)
                     .addAnnotatedClass(Student.class)
+                    .addAnnotatedClass(Course.class)
                     .buildSessionFactory();
         } catch (IOException e) {
             e.printStackTrace();

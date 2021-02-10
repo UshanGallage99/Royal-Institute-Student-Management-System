@@ -46,10 +46,10 @@
                <children>
                   <TableView fx:id="tblCourse" layoutX="56.0" layoutY="460.0" prefHeight="343.0" prefWidth="938.0">
                      <columns>
-                        <TableColumn fx:id="colNIC1" prefWidth="189.0" text="Course Code" />
-                        <TableColumn fx:id="colStudentID1" prefWidth="295.0" text="Course Name" />
-                        <TableColumn fx:id="colStudentName1" prefWidth="228.0" text="Course Fee" />
-                        <TableColumn fx:id="colStudentAddress1" prefWidth="224.0" text="Course Duration" />
+                        <TableColumn fx:id="colCourseCode" prefWidth="189.0" text="Course Code" />
+                        <TableColumn fx:id="colCourseName" prefWidth="295.0" text="Course Name" />
+                        <TableColumn fx:id="colCourseFee" prefWidth="228.0" text="Course Fee" />
+                        <TableColumn fx:id="colCourseDuration" prefWidth="224.0" text="Course Duration" />
                      </columns>
                   </TableView>
                   <JFXTextField fx:id="txtCode" layoutX="77.0" layoutY="31.0" onAction="#txtCodeOnAction" prefHeight="31.0" prefWidth="498.0" promptText="Course Code" />

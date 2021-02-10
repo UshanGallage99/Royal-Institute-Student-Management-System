@@ -2,11 +2,13 @@ package controller;
 
 import bo.BOFactory;
 import bo.BOType;
+import bo.custom.CourseBO;
 import bo.custom.StudentBO;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTabPane;
 import com.jfoenix.controls.JFXTextField;
+import dto.CourseDTO;
 import dto.StudentDTO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -14,6 +16,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import model.CourseTM;
 import model.StudentTM;
 
 import java.net.URL;
@@ -42,11 +45,6 @@ public class Royal_InstituteController implements Initializable {
     public JFXButton btnAdd;
     public JFXButton btnUpdate;
     public JFXButton btnDelete;
-    public TableView tblStudents1;
-    public TableColumn colNIC1;
-    public TableColumn colStudentID1;
-    public TableColumn colStudentName1;
-    public TableColumn colStudentAddress1;
     public JFXTextField txtCode;
     public JFXTextField txtCourseName;
     public JFXTextField txtCourseFee;
@@ -70,11 +68,17 @@ public class Royal_InstituteController implements Initializable {
     public TableColumn colStudentAddress11;
     public TableColumn colStudentAddress111;
     public JFXButton btnRegistration;
+    public TableColumn colCourseCode;
+    public TableColumn colCourseName;
+    public TableColumn colCourseFee;
+    public TableColumn colCourseDuration;
 
     StudentBO studentBO = BOFactory.getInstance().getBO(BOType.STUDENT);
+    CourseBO courseBO = BOFactory.getInstance().getBO(BOType.COURSE);
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        /*Students*/
         colStudentID.setCellValueFactory(new PropertyValueFactory("id"));
         colStudentName.setCellValueFactory(new PropertyValueFactory("student_name"));
         colStudentAddress.setCellValueFactory(new PropertyValueFactory("address"));
@@ -87,10 +91,24 @@ public class Royal_InstituteController implements Initializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         tblStudents.getSelectionModel().selectedItemProperty().
                 addListener((observable, oldValue, newValue) ->{
                     setDataStudent((StudentTM) newValue);
+                } );
+        /*Course*/
+        colCourseCode.setCellValueFactory(new PropertyValueFactory("code"));
+        colCourseName.setCellValueFactory(new PropertyValueFactory("course_name"));
+        colCourseFee.setCellValueFactory(new PropertyValueFactory("course_fee"));
+        colCourseDuration.setCellValueFactory(new PropertyValueFactory("duration"));
+
+        try {
+            loadAllCourses();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        tblCourse.getSelectionModel().selectedItemProperty().
+                addListener((observable, oldValue, newValue) ->{
+                    setDataCourse((CourseTM) newValue);
                 } );
 
     }
@@ -102,6 +120,12 @@ public class Royal_InstituteController implements Initializable {
         txtContact.setText(tm.getContact());
         txtDob.setText(tm.getDob());
         txtGender.setText(tm.getGender());
+    }
+    private void setDataCourse(CourseTM tm){
+        txtCode.setText(tm.getCode());
+        txtCourseName.setText(tm.getCourse_name());
+        txtCourseFee.setText(tm.getCourse_fee()+"");
+        txtDuration.setText(tm.getDuration());
     }
 
     private void loadAllStudents() throws Exception {
@@ -121,8 +145,24 @@ public class Royal_InstituteController implements Initializable {
         }
         tblStudents.setItems(tmList);
     }
+    private void loadAllCourses() throws Exception {
+        tblCourse.getItems().clear();
+        List<CourseDTO> allCourses=courseBO.getAllCourse();
+        ObservableList<CourseTM> tmList= FXCollections.observableArrayList();
 
+        for(CourseDTO courseDTO:allCourses){
+            CourseTM tm=new CourseTM(
+                    courseDTO.getCode(),
+                    courseDTO.getCourse_name(),
+                    courseDTO.getCourse_fee(),
+                    courseDTO.getDuration()
+            );
+            tmList.add(tm);
+        }
+        tblCourse.setItems(tmList);
+    }
 
+    /*Students*/
     public void btnAddOnAction(ActionEvent actionEvent) throws Exception {
         boolean isAdded=studentBO.saveStudent(new StudentDTO(
                 txtStudentID.getText(),
@@ -140,7 +180,7 @@ public class Royal_InstituteController implements Initializable {
             alert.setContentText("Student Added Success...");
             alert.showAndWait();
         }
-       /* loadAllStudents();*/
+        loadAllStudents();
     }
 
     public void btnUpdateOnAction(ActionEvent actionEvent) throws Exception {
@@ -152,7 +192,7 @@ public class Royal_InstituteController implements Initializable {
                 txtGender.getText()
                 ));
 
-        /*loadAllStudents();*/
+        loadAllStudents();
     }
 
     public void btnDeleteOnAction(ActionEvent actionEvent) {
@@ -174,19 +214,6 @@ public class Royal_InstituteController implements Initializable {
         }
 
     }
-
-    public void btnCourseAddOnAction(ActionEvent actionEvent) {
-    }
-
-    public void btnCourseUpdateOnAction(ActionEvent actionEvent) {
-    }
-
-    public void btnCourseDeleteOnAction(ActionEvent actionEvent) {
-    }
-
-    public void btnRegistrationOnAction(ActionEvent actionEvent) {
-    }
-
     public void txtStudentIDOnAction(ActionEvent actionEvent) throws Exception {
         StudentDTO studentDTO=studentBO.getStudent(txtStudentID.getText());
         if(studentDTO!=null){
@@ -199,8 +226,67 @@ public class Royal_InstituteController implements Initializable {
 
         }
     }
+/*Course*/
+    public void btnCourseAddOnAction(ActionEvent actionEvent) throws Exception {
+        boolean b = courseBO.saveCourse(new CourseDTO(txtCode.getText(),
+                txtCourseName.getText(),
+                Double.parseDouble(txtCourseFee.getText()),
+                txtDuration.getText()));
 
-    public void txtCodeOnAction(ActionEvent actionEvent) {
+        if(b){
+            Alert alert=new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setHeaderText(null);
+            alert.setContentText("Course Added Success...");
+            alert.showAndWait();
+        }
+        txtCode.setText("");
+        txtCourseName.setText("");
+        txtCourseFee.setText("");
+        txtDuration.setText("");
+
+        loadAllCourses();
+    }
+
+    public void btnCourseUpdateOnAction(ActionEvent actionEvent) throws Exception {
+        courseBO.updateCourse(new CourseDTO(
+                txtCode.getText(),
+                txtCourseName.getText(),
+                Double.parseDouble(txtCourseFee.getText()),
+                txtDuration.getText())
+        );
+        loadAllCourses();
+    }
+
+    public void btnCourseDeleteOnAction(ActionEvent actionEvent) {
+        Alert alert=new Alert(Alert.AlertType.CONFIRMATION,"Are you sure whether you want to delete this Course?",
+                ButtonType.YES,ButtonType.NO);
+        Optional<ButtonType> buttonType=alert.showAndWait();
+        if(buttonType.get()==ButtonType.YES){
+            CourseTM selectedItem= (CourseTM) tblCourse.getSelectionModel().getSelectedItem();
+            try{
+                courseBO.deleteCourse(selectedItem.getCode());
+                tblCourse.getItems().remove(selectedItem);
+                tblCourse.getSelectionModel().clearSelection();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                new Alert(Alert.AlertType.ERROR,"Failed to delete the Course",ButtonType.OK).show();
+
+            }
+        }
+    }
+
+    public void txtCodeOnAction(ActionEvent actionEvent) throws Exception {
+        CourseDTO courseDTO=courseBO.getCourse(txtCode.getText());
+        if(courseDTO !=null){
+            txtCode.setText(courseDTO.getCode());
+            txtCourseName.setText(courseDTO.getCourse_name());
+            txtCourseFee.setText(courseDTO.getCourse_fee()+"");
+            txtDuration.setText(courseDTO.getDuration());
+        }
+    }
+
+    public void btnRegistrationOnAction(ActionEvent actionEvent) {
     }
 
 

@@ -1,5 +1,6 @@
 package bo;
 
+import bo.custom.impl.CourseBOImpl;
 import bo.custom.impl.StudentBOImpl;
 
 public class BOFactory {
@@ -14,8 +15,8 @@ public class BOFactory {
         switch (boType) {
             case STUDENT:
                 return (T) new StudentBOImpl();
-            /*case COURSE:
-                return (T) new CourseBOImpl();*/
+            case COURSE:
+                return (T) new CourseBOImpl();
             /*case REGISTRATION:
                 return (T) new RegistrationBOImpl();*/
             default:
