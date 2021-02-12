@@ -19,6 +19,26 @@ public class StudentBOImpl implements StudentBO {
     StudentDAOImpl studentDAO= DAOFactory.getInstance().getDAO(DAOType.STUDENT);
 
     @Override
+    public String getNewStudentId() throws Exception {
+        String lastStudentId = studentDAO.getLastStudentID();
+        if (lastStudentId == null) {
+            return "S001";
+        } else {
+            int maxId = Integer.parseInt(lastStudentId.replace("S", ""));
+            maxId = maxId + 1;
+            String id = "";
+            if (maxId < 10) {
+                id = "S00" + maxId;
+            } else if (maxId < 100) {
+                id = "S0" + maxId;
+            } else {
+                id = "S" + maxId;
+            }
+            return id;
+        }
+    }
+
+    @Override
     public boolean saveStudent(StudentDTO studentDTO) throws Exception {
         return studentDAO.save(new Student(studentDTO.getId(),
                 studentDTO.getStudent_name(),

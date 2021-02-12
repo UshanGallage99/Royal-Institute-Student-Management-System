@@ -10,6 +10,8 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
+<!--suppress ALL -->
+
 <JFXTabPane fx:id="root" maxHeight="860.0" maxWidth="1600.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="860.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Royal_InstituteController">
    <tabs>
       <Tab closable="false" text="Students Management">
@@ -37,6 +39,8 @@
                   <JFXButton fx:id="btnAdd" layoutX="735.0" layoutY="43.0" onAction="#btnAddOnAction" style="-fx-background-color: green;" text="Add" />
                   <JFXButton fx:id="btnUpdate" layoutX="723.0" layoutY="106.0" onAction="#btnUpdateOnAction" style="-fx-background-color: green;" text="Update" />
                   <JFXButton fx:id="btnDelete" layoutX="735.0" layoutY="171.0" onAction="#btnDeleteOnAction" style="-fx-background-color: green;" text="Delete" />
+                  <Label fx:id="lblTime" layoutX="1211.0" layoutY="193.0" prefHeight="55.0" prefWidth="267.0" style="-fx-background-color: orange;" />
+                  <Label fx:id="lblDate" layoutX="1201.0" layoutY="111.0" prefHeight="55.0" prefWidth="267.0" style="-fx-background-color: yellow;" />
                </children></AnchorPane>
         </content>
       </Tab>
@@ -59,6 +63,8 @@
                   <JFXButton fx:id="btnCourseAdd" layoutX="715.0" layoutY="39.0" onAction="#btnCourseAddOnAction" style="-fx-background-color: green;" text="Add" />
                   <JFXButton fx:id="btnCourseUpdate" layoutX="725.0" layoutY="89.0" onAction="#btnCourseUpdateOnAction" style="-fx-background-color: green;" text="Update" />
                   <JFXButton fx:id="btnCourseDelete" layoutX="735.0" layoutY="142.0" onAction="#btnCourseDeleteOnAction" style="-fx-background-color: green;" text="Delete" />
+                  <Label fx:id="lblDate2" layoutX="1191.0" layoutY="101.0" prefHeight="55.0" prefWidth="267.0" style="-fx-background-color: yellow;" />
+                  <Label fx:id="lblTime2" layoutX="1201.0" layoutY="183.0" prefHeight="55.0" prefWidth="267.0" style="-fx-background-color: orange;" />
                </children></AnchorPane>
         </content>
       </Tab>
@@ -66,9 +72,9 @@
         <content>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="850.0" style="-fx-background-color: white;">
                <children>
-                  <JFXComboBox fx:id="cmbStudentID" layoutX="57.0" layoutY="50.0" prefHeight="31.0" prefWidth="220.0" promptText="Student ID" />
-                  <JFXComboBox fx:id="cmbCourseCode" layoutX="53.0" layoutY="107.0" prefHeight="31.0" prefWidth="223.0" promptText="Course Code" />
-                  <Label fx:id="lblRegistrationID" layoutX="1171.0" layoutY="23.0" prefHeight="55.0" prefWidth="267.0" style="-fx-background-color: navy blue;" />
+                  <JFXComboBox fx:id="cmbStudentID" layoutX="57.0" layoutY="50.0" onAction="#setStudent" prefHeight="31.0" prefWidth="220.0" promptText="Student ID" />
+                  <JFXComboBox fx:id="cmbCourseCode" layoutX="53.0" layoutY="107.0" onAction="#setCourse" prefHeight="31.0" prefWidth="223.0" promptText="Course Code" />
+                  <Label fx:id="lblRegistrationID" layoutX="1171.0" layoutY="23.0" prefHeight="55.0" prefWidth="267.0" style="-fx-background-color: green;" />
                   <JFXTextField fx:id="txtStudentName2" layoutX="355.0" layoutY="50.0" prefHeight="31.0" prefWidth="440.0" promptText="Student Name" />
                   <JFXTextField fx:id="txtCourseName2" layoutX="355.0" layoutY="112.0" prefHeight="31.0" prefWidth="440.0" promptText="Course Name" />
                   <JFXTextField fx:id="txtCourseFee2" layoutX="355.0" layoutY="165.0" prefHeight="31.0" prefWidth="440.0" promptText="Course Fee" />
@@ -76,20 +82,30 @@
                   <JFXTextField fx:id="txtRegistrationFee" layoutX="357.0" layoutY="265.0" prefHeight="31.0" prefWidth="440.0" promptText="Registration Fee" />
                   <TableView fx:id="tblRegistration" layoutX="46.0" layoutY="457.0" prefHeight="343.0" prefWidth="1067.0">
                      <columns>
-                        <TableColumn fx:id="colNIC11" prefWidth="189.0" text="Registration Number" />
-                        <TableColumn fx:id="colStudentID11" prefWidth="206.0" text="Registration Date" />
-                        <TableColumn fx:id="colStudentName11" prefWidth="227.0" text="Registration Fee" />
-                        <TableColumn fx:id="colStudentAddress11" prefWidth="233.0" text="Student ID" />
-                        <TableColumn fx:id="colStudentAddress111" prefWidth="211.0" text="Course Code" />
+                        <TableColumn fx:id="colRegNo" prefWidth="189.0" text="Registration Number" />
+                        <TableColumn fx:id="colRegDate" prefWidth="206.0" text="Registration Date" />
+                        <TableColumn fx:id="colRegFee" prefWidth="227.0" text="Registration Fee" />
+                        <TableColumn fx:id="colStuId" prefWidth="233.0" text="Student ID" />
+                        <TableColumn fx:id="colCouCode" prefWidth="211.0" text="Course Code" />
                      </columns>
                   </TableView>
                   <JFXButton fx:id="btnRegistration" layoutX="990.0" layoutY="296.0" onAction="#btnRegistrationOnAction" style="-fx-background-color: green;" text="Confirm Registration" />
+                  <Label fx:id="lblDate3" layoutX="1181.0" layoutY="91.0" prefHeight="55.0" prefWidth="267.0" style="-fx-background-color: yellow;" />
+                  <Label fx:id="lblTime3" layoutX="1191.0" layoutY="173.0" prefHeight="55.0" prefWidth="267.0" style="-fx-background-color: orange;" />
+                  <Label fx:id="lblRegDate" layoutX="355.0" layoutY="307.0" prefHeight="40.0" prefWidth="375.0" text="Label" />
+                  <Label fx:id="lblStuid" layoutX="352.0" layoutY="350.0" prefHeight="40.0" prefWidth="375.0" text="Label" />
+                  <Label fx:id="lblCoucode" layoutX="350.0" layoutY="391.0" prefHeight="40.0" prefWidth="375.0" text="Label" />
                </children></AnchorPane>
         </content>
       </Tab>
       <Tab closable="false" text="Records">
         <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefWidth="1600.0" style="-fx-background-color: white;" />
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefWidth="1600.0" style="-fx-background-color: white;">
+               <children>
+                  <Label layoutX="579.0" layoutY="49.0" text="Label" />
+                  <Label fx:id="lblDate4" layoutX="1201.0" layoutY="111.0" prefHeight="55.0" prefWidth="267.0" style="-fx-background-color: yellow;" />
+                  <Label fx:id="lblTime4" layoutX="1201.0" layoutY="183.0" prefHeight="55.0" prefWidth="267.0" style="-fx-background-color: orange;" />
+               </children></AnchorPane>
         </content>
       </Tab>
    </tabs>

@@ -14,6 +14,27 @@ import java.util.List;
 
 public class CourseBOImpl implements CourseBO {
     CourseDAOImpl courseDAO= DAOFactory.getInstance().getDAO(DAOType.COURSE);
+
+    @Override
+    public String getNewCourseId() throws Exception {
+        String lastCourseId = courseDAO.getLastStudentID();
+        if (lastCourseId == null) {
+            return "C001";
+        } else {
+            int maxId = Integer.parseInt(lastCourseId.replace("C", ""));
+            maxId = maxId + 1;
+            String id = "";
+            if (maxId < 10) {
+                id = "C00" + maxId;
+            } else if (maxId < 100) {
+                id = "C0" + maxId;
+            } else {
+                id = "C" + maxId;
+            }
+            return id;
+        }
+    }
+
     @Override
     public boolean saveCourse(CourseDTO courseDTO) throws Exception {
         return courseDAO.save(new Course(courseDTO.getCode(),

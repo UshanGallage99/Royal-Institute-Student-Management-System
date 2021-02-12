@@ -1,6 +1,7 @@
 package dao;
 
 import dao.custom.impl.CourseDAOImpl;
+import dao.custom.impl.RegistrationDAOImpl;
 import dao.custom.impl.StudentDAOImpl;
 
 public class DAOFactory {
@@ -20,8 +21,8 @@ public class DAOFactory {
                 return (T) new StudentDAOImpl();
             case COURSE:
                 return (T) new CourseDAOImpl();
-            /*case REGISTRATION:
-                return (T) new RegistrationDAOImpl();*/
+            case REGISTRATION:
+                return (T) new RegistrationDAOImpl();
             default:
                 return null;
         }

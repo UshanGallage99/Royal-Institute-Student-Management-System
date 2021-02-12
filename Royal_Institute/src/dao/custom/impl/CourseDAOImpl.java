@@ -6,6 +6,7 @@ import entity.Course;
 import entity.Student;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.NativeQuery;
 
 import java.util.List;
 
@@ -59,5 +60,15 @@ public class CourseDAOImpl implements CourseDAO {
         transaction.commit();
         session.close();
         return list;
+    }
+
+    @Override
+    public String getLastStudentID() throws Exception {
+        Session session = FactoryConfiguration.getInstance().getSession();
+        Transaction transaction = session.beginTransaction();
+        NativeQuery query =  session.createSQLQuery("SELECT code FROM Course ORDER BY code DESC LIMIT 1");
+        String rst =(String) query.uniqueResult();
+        transaction.commit();
+        return rst;
     }
 }

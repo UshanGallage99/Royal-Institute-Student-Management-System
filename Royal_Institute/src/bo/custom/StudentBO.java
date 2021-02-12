@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public interface StudentBO extends SuperBO{
+    public String getNewStudentId() throws Exception;
     public boolean saveStudent(StudentDTO studentDTO)throws Exception;
 
     public boolean deleteStudent(String id)throws Exception;
