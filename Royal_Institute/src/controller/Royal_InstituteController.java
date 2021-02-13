@@ -24,6 +24,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.paint.Paint;
 import javafx.util.Duration;
 import model.CourseTM;
 import model.RegistrationTM;
@@ -35,6 +36,7 @@ import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.regex.Pattern;
 
 public class Royal_InstituteController implements Initializable {
     public JFXTabPane root;
@@ -54,6 +56,8 @@ public class Royal_InstituteController implements Initializable {
     public JFXTextField txtDob;
     public JFXTextField txtGender;
     public JFXButton btnAdd;
+    public JFXButton btnadd;
+    public JFXButton btnadd2;
     public JFXButton btnUpdate;
     public JFXButton btnDelete;
     public JFXTextField txtCode;
@@ -160,8 +164,24 @@ public class Royal_InstituteController implements Initializable {
         loadCourse();
         /*reg id*/
         generateRegistrationId();
-        generateStudentId();
-        generateCourseId();
+        /*generateStudentId();
+        generateCourseId();*/
+        txtStudentID.setDisable(true);
+        txtStudentName.setDisable(true);
+        txtStudentAddress.setDisable(true);
+        txtContact.setDisable(true);
+        txtDob.setDisable(true);
+        txtGender.setDisable(true);
+        btnAdd.setDisable(true);
+        btnUpdate.setDisable(true);
+        btnDelete.setDisable(true);
+        txtCode.setDisable(true);
+        txtCourseName.setDisable(true);
+        txtCourseFee.setDisable(true);
+        txtDuration.setDisable(true);
+        btnCourseAdd.setDisable(true);
+        btnCourseUpdate.setDisable(true);
+        btnCourseDelete.setDisable(true);
 
     }
     /*cmb load-------------------------------------------------------------------------------*/
@@ -249,9 +269,8 @@ public class Royal_InstituteController implements Initializable {
         }
         tblCourse.setItems(tmList);
     }
-
     private void loadAllRegistration() throws Exception {
-        tblRegistration.getItems().clear();
+        /*tblRegistration.getItems().clear();
         List<RegistrationDTO> allRegistration=registrationBO.getAllReg();
         ObservableList<RegistrationTM> tmList= FXCollections.observableArrayList();
 
@@ -265,11 +284,20 @@ public class Royal_InstituteController implements Initializable {
             );
             tmList.add(tm);
         }
-        tblRegistration.setItems(tmList);
+        tblRegistration.setItems(tmList);*/
     }
 
     /*Students crud-------------------------------------------------------------------*/
     public void btnAddOnAction(ActionEvent actionEvent) throws Exception {
+        String name = txtStudentName.getText();
+        String address = txtStudentAddress.getText();
+        String contact = txtContact.getText();
+        String dob = txtDob.getText();
+        String gender = txtGender.getText();
+
+            if (Pattern.compile("^[A-z ]{1,50}$").matcher(txtStudentName.getText()).matches()){
+                if (Pattern.compile("^[A-z ]{1,50}$").matcher(txtStudentAddress.getText()).matches()){
+                    if (Pattern.compile("^[0-9]{1,12}$").matcher(txtContact.getText()).matches()) {
         boolean isAdded=studentBO.saveStudent(new StudentDTO(
                 txtStudentID.getText(),
                 txtStudentName.getText(),
@@ -279,25 +307,92 @@ public class Royal_InstituteController implements Initializable {
                 txtGender.getText()
 
         ));
-        System.out.println("UShan");
-        if(isAdded){
-            Alert alert=new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setHeaderText(null);
-            alert.setContentText("Student Added Success...");
-            alert.showAndWait();
+        /*System.out.println("UShan");*/
+        if (name.trim().length() == 0 | address.trim().length() == 0 | contact.trim().length() == 0 | dob.trim().length() == 0 | gender.trim().length() == 0) {
+            new Alert(Alert.AlertType.ERROR, "Input feilds can't be empty", ButtonType.OK).show();
+            return;
         }
-        loadAllStudents();
+        if(isAdded) {
+            new Alert(Alert.AlertType.CONFIRMATION,
+                    "Student Successfully Added", ButtonType.OK).show();
+
+            txtStudentID.clear();
+            txtStudentName.clear();
+            txtStudentAddress.clear();
+            txtContact.clear();
+            txtDob.clear();
+            txtGender.clear();
+            generateStudentId();
+            loadAllStudents();
+            loadStudent();
+        } else {
+            new Alert(Alert.AlertType.WARNING,
+                    "Someting Went Wrong ! Try Again", ButtonType.OK).show();}
+                    }else{
+                        txtContact.setUnFocusColor(Paint.valueOf("red"));
+                        txtContact.requestFocus();
+                    }
+
+                }else{
+                    txtStudentAddress.setUnFocusColor(Paint.valueOf("red"));
+                    txtStudentAddress.requestFocus();
+                }
+            } else {
+                txtStudentName.setUnFocusColor(Paint.valueOf("red"));
+                txtStudentName.requestFocus();
+            }
+
     }
     public void btnUpdateOnAction(ActionEvent actionEvent) throws Exception {
-        studentBO.updateStudent(new StudentDTO(txtStudentID.getText(),
+        String name = txtStudentName.getText();
+        String address = txtStudentAddress.getText();
+        String contact = txtContact.getText();
+        String dob = txtDob.getText();
+        String gender = txtGender.getText();
+
+        if (Pattern.compile("^[A-z ]{1,50}$").matcher(txtStudentName.getText()).matches()){
+            if (Pattern.compile("^[A-z ]{1,50}$").matcher(txtStudentAddress.getText()).matches()){
+                if (Pattern.compile("^[0-9]{1,12}$").matcher(txtContact.getText()).matches()) {
+                Boolean isAdded= studentBO.updateStudent(new StudentDTO(txtStudentID.getText(),
                 txtStudentName.getText(),
                 txtStudentAddress.getText(),
                 txtContact.getText(),
                 txtDob.getText(),
                 txtGender.getText()
                 ));
+                    if (name.trim().length() == 0 | address.trim().length() == 0 | contact.trim().length() == 0 | dob.trim().length() == 0 | gender.trim().length() == 0) {
+                        new Alert(Alert.AlertType.ERROR, "Input feilds can't be empty", ButtonType.OK).show();
+                        return;
+                    }
+                    if(isAdded) {
+                        new Alert(Alert.AlertType.CONFIRMATION,
+                                "Student Successfully Updated", ButtonType.OK).show();
 
-        loadAllStudents();
+                        txtStudentID.clear();
+                        txtStudentName.clear();
+                        txtStudentAddress.clear();
+                        txtContact.clear();
+                        txtDob.clear();
+                        txtGender.clear();
+                        generateStudentId();
+                        loadAllStudents();
+                        loadStudent();
+                    } else {
+                        new Alert(Alert.AlertType.WARNING,
+                                "Someting Went Wrong ! Try Again", ButtonType.OK).show();}
+                }else{
+                    txtContact.setUnFocusColor(Paint.valueOf("red"));
+                    txtContact.requestFocus();
+                }
+
+            }else{
+                txtStudentAddress.setUnFocusColor(Paint.valueOf("red"));
+                txtStudentAddress.requestFocus();
+            }
+        } else {
+            txtStudentName.setUnFocusColor(Paint.valueOf("red"));
+            txtStudentName.requestFocus();
+        }
     }
     public void btnDeleteOnAction(ActionEvent actionEvent) {
         Alert alert=new Alert(Alert.AlertType.CONFIRMATION,"Are you sure whether you want to delete this Student ?",
@@ -309,6 +404,16 @@ public class Royal_InstituteController implements Initializable {
                 studentBO.deleteStudent(selectedItem.getId());
                 tblStudents.getItems().remove(selectedItem);
                 tblStudents.getSelectionModel().clearSelection();
+
+                txtStudentID.clear();
+                txtStudentName.clear();
+                txtStudentAddress.clear();
+                txtContact.clear();
+                txtDob.clear();
+                txtGender.clear();
+                generateStudentId();
+                loadAllStudents();
+                loadStudent();
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -330,34 +435,114 @@ public class Royal_InstituteController implements Initializable {
 
         }
     }
+    public void btnaddOnAction(ActionEvent actionEvent) {
+        txtStudentID.clear();
+        txtStudentName.clear();
+        txtStudentAddress.clear();
+        txtContact.clear();
+        txtDob.clear();
+        txtGender.clear();
+        txtStudentName.setDisable(false);
+        txtStudentAddress.setDisable(false);
+        txtContact.setDisable(false);
+        txtDob.setDisable(false);
+        txtGender.setDisable(false);
+        btnAdd.setDisable(false);
+        tblStudents.getSelectionModel().clearSelection();
+        txtStudentName.requestFocus();
+        generateStudentId();
+    }
     /*Course crud-----------------------------------------------------------------------*/
     public void btnCourseAddOnAction(ActionEvent actionEvent) throws Exception {
-        boolean b = courseBO.saveCourse(new CourseDTO(txtCode.getText(),
+        String course_name = txtCourseName.getText();
+        double course_fee = Double.parseDouble(txtCourseFee.getText());
+        String duration = txtDuration.getText();
+
+        if (Pattern.compile("^[A-z ]{1,50}$").matcher(txtCourseName.getText()).matches()){
+            if (Pattern.compile("^[0-9]{1,20}$").matcher(txtCourseFee.getText()).matches()){
+                if (Pattern.compile("^[A-z ]{1,50}$").matcher(txtDuration.getText()).matches()) {
+        boolean isAdded = courseBO.saveCourse(new CourseDTO(txtCode.getText(),
                 txtCourseName.getText(),
                 Double.parseDouble(txtCourseFee.getText()),
                 txtDuration.getText()));
-
-        if(b){
-            Alert alert=new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setHeaderText(null);
-            alert.setContentText("Course Added Success...");
-            alert.showAndWait();
+        if (course_name.trim().length() == 0 || duration.trim().length() == 0) {
+            new Alert(Alert.AlertType.ERROR, "Input feilds can't be empty", ButtonType.OK).show();
+            return;
         }
-        txtCode.setText("");
-        txtCourseName.setText("");
-        txtCourseFee.setText("");
-        txtDuration.setText("");
+        if(isAdded) {
+            new Alert(Alert.AlertType.CONFIRMATION,
+                    "Course Successfully Added", ButtonType.OK).show();
 
-        loadAllCourses();
+            txtCode.clear();
+            txtCourseName.clear();
+            txtCourseFee.clear();
+            txtDuration.clear();
+            generateCourseId();
+            loadAllCourses();
+            loadCourse();
+        }else {
+            new Alert(Alert.AlertType.WARNING,
+                    "Someting Went Wrong ! Try Again", ButtonType.OK).show();
+        }
+                }else{
+                    txtDuration.setUnFocusColor(Paint.valueOf("red"));
+                    txtDuration.requestFocus();
+                }
+
+            }else{
+                txtCourseFee.setUnFocusColor(Paint.valueOf("red"));
+                txtCourseFee.requestFocus();
+            }
+        } else {
+            txtCourseName.setUnFocusColor(Paint.valueOf("red"));
+            txtCourseName.requestFocus();
+        }
     }
     public void btnCourseUpdateOnAction(ActionEvent actionEvent) throws Exception {
-        courseBO.updateCourse(new CourseDTO(
+        String course_name = txtCourseName.getText();
+        double course_fee = Double.parseDouble(txtCourseFee.getText());
+        String duration = txtDuration.getText();
+
+        if (Pattern.compile("^[A-z ]{1,50}$").matcher(txtCourseName.getText()).matches()){
+            if (Pattern.compile("^[0-9]{1,20}$").matcher(txtCourseFee.getText()).matches()){
+                if (Pattern.compile("^[A-z ]{1,50}$").matcher(txtDuration.getText()).matches()) {
+        boolean isAdded=courseBO.updateCourse(new CourseDTO(
                 txtCode.getText(),
                 txtCourseName.getText(),
                 Double.parseDouble(txtCourseFee.getText()),
                 txtDuration.getText())
         );
+                    if (course_name.trim().length() == 0 || duration.trim().length() == 0) {
+                        new Alert(Alert.AlertType.ERROR, "Input feilds can't be empty", ButtonType.OK).show();
+                        return;
+                    }
+                    if(isAdded) {
+                        new Alert(Alert.AlertType.CONFIRMATION,
+                                "Course Successfully Updated", ButtonType.OK).show();
+        txtCode.clear();
+        txtCourseName.clear();
+        txtCourseFee.clear();
+        txtDuration.clear();
+        generateCourseId();
         loadAllCourses();
+        loadCourse();
+                    }else {
+                        new Alert(Alert.AlertType.WARNING,
+                                "Someting Went Wrong ! Try Again", ButtonType.OK).show();
+                    }
+                }else{
+                    txtDuration.setUnFocusColor(Paint.valueOf("red"));
+                    txtDuration.requestFocus();
+                }
+
+            }else{
+                txtCourseFee.setUnFocusColor(Paint.valueOf("red"));
+                txtCourseFee.requestFocus();
+            }
+        } else {
+            txtCourseName.setUnFocusColor(Paint.valueOf("red"));
+            txtCourseName.requestFocus();
+        }
     }
     public void btnCourseDeleteOnAction(ActionEvent actionEvent) {
         Alert alert=new Alert(Alert.AlertType.CONFIRMATION,"Are you sure whether you want to delete this Course?",
@@ -369,6 +554,14 @@ public class Royal_InstituteController implements Initializable {
                 courseBO.deleteCourse(selectedItem.getCode());
                 tblCourse.getItems().remove(selectedItem);
                 tblCourse.getSelectionModel().clearSelection();
+
+                txtCode.clear();
+                txtCourseName.clear();
+                txtCourseFee.clear();
+                txtDuration.clear();
+                generateCourseId();
+                loadAllCourses();
+                loadCourse();
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -386,8 +579,23 @@ public class Royal_InstituteController implements Initializable {
             txtDuration.setText(courseDTO.getDuration());
         }
     }
-    /*Registration crud----------------------------------------------------------------------------*/
+    public void btnadd2OnAction(ActionEvent actionEvent) {
+        txtCode.clear();
+        txtCourseName.clear();
+        txtCourseFee.clear();
+        txtDuration.clear();
+        txtCourseName.setDisable(false);
+        txtCourseFee.setDisable(false);
+        txtDuration.setDisable(false);
+        btnCourseAdd.setDisable(false);
+        btnCourseUpdate.setDisable(false);
+        btnCourseDelete.setDisable(false);
+        tblCourse.getSelectionModel().clearSelection();
+        txtCourseName.requestFocus();
+        generateCourseId();
+    }
 
+    /*generate id----------------------------------------------------------------------------------*/
     public void generateRegistrationId(){
          int no=001;
         try {
@@ -411,11 +619,29 @@ public class Royal_InstituteController implements Initializable {
             e.printStackTrace();
         }
     }
+    /*Registration crud----------------------------------------------------------------------------*/
 
-    public void btnRegistrationOnAction(ActionEvent actionEvent) {
+    public void btnRegistrationOnAction(ActionEvent actionEvent) throws Exception {
+        try {
+            int regId = Integer.parseInt(lblRegistrationID.getText());
+            String regDate = lblDate3.getText().trim();
+            double fee = Double.parseDouble(txtRegistrationFee.getText());
+            StudentDTO studentDTO = new StudentDTO(cmbStudentID.getValue().toString());
+            CourseDTO courseDTO = new CourseDTO(cmbCourseCode.getValue().toString());
+
+            boolean flag = registrationBO.saveReg(new RegistrationDTO(regId,
+                    regDate,
+                    fee,
+                    studentDTO,
+                    courseDTO
+            ));
+            if (flag) {
+                new Alert(Alert.AlertType.CONFIRMATION, "Student Registerd!", ButtonType.OK).show();
+            }
+        } finally {
+
+        }
     }
-
-
 
     /*cmb to feild--------------------------------------------------------------------------------------------*/
     public void setStudent(ActionEvent actionEvent) {
@@ -465,4 +691,5 @@ public class Royal_InstituteController implements Initializable {
         date.setCycleCount(Animation.INDEFINITE);
         date.play();
     }
+
 }

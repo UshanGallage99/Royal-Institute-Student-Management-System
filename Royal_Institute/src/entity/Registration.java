@@ -1,7 +1,9 @@
 package entity;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Registration implements SuperEntity{
@@ -9,18 +11,24 @@ public class Registration implements SuperEntity{
     private Integer regNo;
     private String regDate;
     private double regFee;
-    private String studentId;
-    private String courseCode;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Student student;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Course course;
 
     public Registration() {
     }
 
-    public Registration(Integer regNo, String regDate, double regFee, String studentId, String courseCode) {
+    public Registration(Integer regNo, String regDate, double regFee, Student student, Course course) {
         this.regNo = regNo;
         this.regDate = regDate;
         this.regFee = regFee;
-        this.studentId = studentId;
-        this.courseCode = courseCode;
+        this.student = student;
+        this.course = course;
+    }
+
+    public Registration(Integer regNo) {
+        this.regNo = regNo;
     }
 
     public Integer getRegNo() {
@@ -47,20 +55,20 @@ public class Registration implements SuperEntity{
         this.regFee = regFee;
     }
 
-    public String getStudentId() {
-        return studentId;
+    public Student getStudent() {
+        return student;
     }
 
-    public void setStudentId(String studentId) {
-        this.studentId = studentId;
+    public void setStudent(Student student) {
+        this.student = student;
     }
 
-    public String getCourseCode() {
-        return courseCode;
+    public Course getCourse() {
+        return course;
     }
 
-    public void setCourseCode(String courseCode) {
-        this.courseCode = courseCode;
+    public void setCourse(Course course) {
+        this.course = course;
     }
 
     @Override
@@ -69,8 +77,8 @@ public class Registration implements SuperEntity{
                 "regNo=" + regNo +
                 ", regDate='" + regDate + '\'' +
                 ", regFee=" + regFee +
-                ", studentId='" + studentId + '\'' +
-                ", courseCode='" + courseCode + '\'' +
+                ", student=" + student +
+                ", course=" + course +
                 '}';
     }
 }

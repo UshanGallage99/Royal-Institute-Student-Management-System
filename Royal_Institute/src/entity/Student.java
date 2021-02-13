@@ -1,7 +1,10 @@
 package entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import java.util.List;
 
 @Entity
 public class Student implements SuperEntity{
@@ -12,6 +15,16 @@ public class Student implements SuperEntity{
     private String contact;
     private String  dob;
     private String gender;
+    @OneToMany(mappedBy = "student",cascade = CascadeType.ALL)
+    private List<Registration> registrations;
+
+    public Student(List<Registration> registrations) {
+        this.registrations = registrations;
+    }
+
+    public Student(String id) {
+        this.id = id;
+    }
 
     public Student() {
     }

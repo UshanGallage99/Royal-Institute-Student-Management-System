@@ -6,6 +6,10 @@ public class CourseDTO {
     private double course_fee;
     private String duration;
 
+    public CourseDTO(String code) {
+        this.code = code;
+    }
+
     public CourseDTO() {
     }
 

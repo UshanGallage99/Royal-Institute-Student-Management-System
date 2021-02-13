@@ -14,7 +14,12 @@ import java.util.List;
 public class RegistrationDAOImpl implements RegistrationDAO {
     @Override
     public boolean save(Registration registration) throws Exception {
-        return false;
+        Session session = FactoryConfiguration.getInstance().getSession();
+        Transaction transaction = session.beginTransaction();
+        session.save(registration);
+        transaction.commit();
+        session.close();
+        return true;
     }
 
     @Override

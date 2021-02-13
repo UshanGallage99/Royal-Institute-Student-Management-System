@@ -8,6 +8,10 @@ public class StudentDTO {
     private String dob;
     private String gender;
 
+    public StudentDTO(String id) {
+        this.id = id;
+    }
+
     public StudentDTO() {
     }
 

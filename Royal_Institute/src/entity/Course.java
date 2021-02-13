@@ -1,7 +1,10 @@
 package entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import java.util.List;
 
 @Entity
 public class Course implements SuperEntity {
@@ -10,6 +13,16 @@ public class Course implements SuperEntity {
     private String course_name;
     private double course_fee;
     private String duration;
+    @OneToMany(mappedBy = "course",cascade = CascadeType.ALL)
+    private List<Registration>registrations;
+
+    public Course(List<Registration> registrations) {
+        this.registrations = registrations;
+    }
+
+    public Course(String code) {
+        this.code = code;
+    }
 
     public Course() {
     }
