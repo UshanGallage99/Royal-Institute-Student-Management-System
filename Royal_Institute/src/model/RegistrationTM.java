@@ -1,16 +1,19 @@
 package model;
 
+import dto.CourseDTO;
+import dto.StudentDTO;
+
 public class RegistrationTM {
     private Integer regNo;
     private String regDate;
     private double regFee;
-    private String studentId;
-    private String courseCode;
+    private StudentDTO studentId;
+    private CourseDTO courseCode;
 
     public RegistrationTM() {
     }
 
-    public RegistrationTM(Integer regNo, String regDate, double regFee, String studentId, String courseCode) {
+    public RegistrationTM(Integer regNo, String regDate, double regFee, StudentDTO studentId, CourseDTO courseCode) {
         this.regNo = regNo;
         this.regDate = regDate;
         this.regFee = regFee;
@@ -42,19 +45,19 @@ public class RegistrationTM {
         this.regFee = regFee;
     }
 
-    public String getStudentId() {
+    public StudentDTO getStudentId() {
         return studentId;
     }
 
-    public void setStudentId(String studentId) {
+    public void setStudentId(StudentDTO studentId) {
         this.studentId = studentId;
     }
 
-    public String getCourseCode() {
+    public CourseDTO getCourseCode() {
         return courseCode;
     }
 
-    public void setCourseCode(String courseCode) {
+    public void setCourseCode(CourseDTO courseCode) {
         this.courseCode = courseCode;
     }
 

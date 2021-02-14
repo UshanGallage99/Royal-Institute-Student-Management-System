@@ -1,5 +1,8 @@
 package dto;
 
+import entity.Course;
+import entity.Student;
+
 import javax.persistence.Entity;
 
 
@@ -10,7 +13,7 @@ public class RegistrationDTO {
     private StudentDTO studentDTO;
     private CourseDTO courseDTO;
 
-    public RegistrationDTO() {
+    public RegistrationDTO(Integer regNo, String regDate, double regFee, Student student, Course course) {
     }
 
     public RegistrationDTO(Integer regNo, String regDate, double regFee, StudentDTO studentDTO, CourseDTO courseDTO) {

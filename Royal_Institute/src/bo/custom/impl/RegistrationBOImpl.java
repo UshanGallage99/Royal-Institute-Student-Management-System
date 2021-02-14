@@ -66,7 +66,7 @@ public class RegistrationBOImpl implements RegistrationBO {
 
     @Override
     public ArrayList<RegistrationDTO> getAllReg() throws Exception {
-        /*List<Registration> registrationList=registrationDAO.findAll();
+        List<Registration> registrationList=registrationDAO.findAll();
         ArrayList<RegistrationDTO> dtoList=new ArrayList();
         for(Registration registration:registrationList){
             dtoList.add(new RegistrationDTO(
@@ -77,7 +77,7 @@ public class RegistrationBOImpl implements RegistrationBO {
                     registration.getCourse()
             ));
         }
-        return dtoList;*/
-        return null;
+        return dtoList;
+        /*return null;*/
     }
 }

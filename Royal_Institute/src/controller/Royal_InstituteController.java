@@ -58,6 +58,7 @@ public class Royal_InstituteController implements Initializable {
     public JFXButton btnAdd;
     public JFXButton btnadd;
     public JFXButton btnadd2;
+    public JFXButton btnadd3;
     public JFXButton btnUpdate;
     public JFXButton btnDelete;
     public JFXTextField txtCode;
@@ -71,6 +72,11 @@ public class Royal_InstituteController implements Initializable {
     public JFXComboBox cmbStudentID;
     public JFXComboBox cmbCourseCode;
     public Label lblRegistrationID;
+    public Label lblRegname;
+    public Label lblStudentNum;
+    public Label lblStudentNum1;
+    public Label lblCourseNum;
+    public Label lblCourseNum1;
     public JFXTextField txtStudentName2;
     public JFXTextField txtCourseName2;
     public JFXTextField txtCourseFee2;
@@ -142,7 +148,7 @@ public class Royal_InstituteController implements Initializable {
                     setDataCourse((CourseTM) newValue);
                 } );
 
-        colRegNo.setCellValueFactory(new PropertyValueFactory("regNo"));
+        /*colRegNo.setCellValueFactory(new PropertyValueFactory("regNo"));
         colRegDate.setCellValueFactory(new PropertyValueFactory("regDate"));
         colRegFee.setCellValueFactory(new PropertyValueFactory("regFee"));
         colStuId.setCellValueFactory(new PropertyValueFactory("studentId"));
@@ -156,14 +162,13 @@ public class Royal_InstituteController implements Initializable {
         tblRegistration.getSelectionModel().selectedItemProperty().
                 addListener((observable, oldValue, newValue) ->{
                     setDataRegistration((RegistrationTM) newValue);
-                } );
+                } );*/
 
         /*student cmb loder*/
         loadStudent();
         /*course cmb loder*/
         loadCourse();
         /*reg id*/
-        generateRegistrationId();
         /*generateStudentId();
         generateCourseId();*/
         txtStudentID.setDisable(true);
@@ -183,6 +188,22 @@ public class Royal_InstituteController implements Initializable {
         btnCourseUpdate.setDisable(true);
         btnCourseDelete.setDisable(true);
 
+        cmbStudentID.setDisable(true);
+        cmbCourseCode.setDisable(true);
+        txtStudentName2.setDisable(true);
+        txtCourseName2.setDisable(true);
+        txtCourseFee2.setDisable(true);
+        txtRegistrationFee.setDisable(true);
+        lblRegDate.setDisable(true);
+        lblStuid.setDisable(true);
+        lblCoucode.setDisable(true);
+        lblRegistrationID.setDisable(true);
+        lblRegname.setDisable(true);
+        btnRegistration.setDisable(true);
+        setLable();
+        setLable1();
+        setLable2();
+        setLable3();
     }
     /*cmb load-------------------------------------------------------------------------------*/
     private void loadStudent()  {
@@ -232,8 +253,8 @@ public class Royal_InstituteController implements Initializable {
         lblRegistrationID.setText(tm.getRegNo()+"");
         lblRegDate.setText(tm.getRegDate());
         txtRegistrationFee.setText(tm.getRegFee()+"");
-        lblStuid.setText(tm.getStudentId());
-        lblCoucode.setText(tm.getCourseCode());
+        lblStuid.setText(String.valueOf(tm.getStudentId()));
+        lblCoucode.setText(String.valueOf(tm.getCourseCode()));
     }
     /*table load------------------------------------------------------------------------------------*/
     private void loadAllStudents() throws Exception {
@@ -270,7 +291,7 @@ public class Royal_InstituteController implements Initializable {
         tblCourse.setItems(tmList);
     }
     private void loadAllRegistration() throws Exception {
-        /*tblRegistration.getItems().clear();
+        tblRegistration.getItems().clear();
         List<RegistrationDTO> allRegistration=registrationBO.getAllReg();
         ObservableList<RegistrationTM> tmList= FXCollections.observableArrayList();
 
@@ -279,12 +300,12 @@ public class Royal_InstituteController implements Initializable {
                     registrationDTO.getRegNo(),
                     registrationDTO.getRegDate(),
                     registrationDTO.getRegFee(),
-                    registrationDTO.getStudentId(),
-                    registrationDTO.getCourseCode()
+                    registrationDTO.getStudentDTO(),
+                    registrationDTO.getCourseDTO()
             );
             tmList.add(tm);
         }
-        tblRegistration.setItems(tmList);*/
+        tblRegistration.setItems(tmList);
     }
 
     /*Students crud-------------------------------------------------------------------*/
@@ -325,6 +346,10 @@ public class Royal_InstituteController implements Initializable {
             generateStudentId();
             loadAllStudents();
             loadStudent();
+            setLable();
+            setLable1();
+            setLable2();
+            setLable3();
         } else {
             new Alert(Alert.AlertType.WARNING,
                     "Someting Went Wrong ! Try Again", ButtonType.OK).show();}
@@ -377,6 +402,10 @@ public class Royal_InstituteController implements Initializable {
                         generateStudentId();
                         loadAllStudents();
                         loadStudent();
+                        setLable();
+                        setLable1();
+                        setLable2();
+                        setLable3();
                     } else {
                         new Alert(Alert.AlertType.WARNING,
                                 "Someting Went Wrong ! Try Again", ButtonType.OK).show();}
@@ -414,6 +443,10 @@ public class Royal_InstituteController implements Initializable {
                 generateStudentId();
                 loadAllStudents();
                 loadStudent();
+                setLable();
+                setLable1();
+                setLable2();
+                setLable3();
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -448,6 +481,8 @@ public class Royal_InstituteController implements Initializable {
         txtDob.setDisable(false);
         txtGender.setDisable(false);
         btnAdd.setDisable(false);
+        btnUpdate.setDisable(false);
+        btnDelete.setDisable(false);
         tblStudents.getSelectionModel().clearSelection();
         txtStudentName.requestFocus();
         generateStudentId();
@@ -480,6 +515,10 @@ public class Royal_InstituteController implements Initializable {
             generateCourseId();
             loadAllCourses();
             loadCourse();
+            setLable();
+            setLable1();
+            setLable2();
+            setLable3();
         }else {
             new Alert(Alert.AlertType.WARNING,
                     "Someting Went Wrong ! Try Again", ButtonType.OK).show();
@@ -526,6 +565,10 @@ public class Royal_InstituteController implements Initializable {
         generateCourseId();
         loadAllCourses();
         loadCourse();
+                        setLable();
+                        setLable1();
+                        setLable2();
+                        setLable3();
                     }else {
                         new Alert(Alert.AlertType.WARNING,
                                 "Someting Went Wrong ! Try Again", ButtonType.OK).show();
@@ -562,6 +605,10 @@ public class Royal_InstituteController implements Initializable {
                 generateCourseId();
                 loadAllCourses();
                 loadCourse();
+                setLable();
+                setLable1();
+                setLable2();
+                setLable3();
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -629,18 +676,59 @@ public class Royal_InstituteController implements Initializable {
             StudentDTO studentDTO = new StudentDTO(cmbStudentID.getValue().toString());
             CourseDTO courseDTO = new CourseDTO(cmbCourseCode.getValue().toString());
 
-            boolean flag = registrationBO.saveReg(new RegistrationDTO(regId,
+            boolean isAdded = registrationBO.saveReg(new RegistrationDTO(regId,
                     regDate,
                     fee,
                     studentDTO,
                     courseDTO
             ));
-            if (flag) {
-                new Alert(Alert.AlertType.CONFIRMATION, "Student Registerd!", ButtonType.OK).show();
-            }
+            if (isAdded) {
+                new Alert(Alert.AlertType.CONFIRMATION,
+                        "Registration Successfully Complete", ButtonType.OK).show();
+                txtStudentName2.clear();
+                txtCourseName2.clear();
+                txtCourseFee2.clear();
+                txtCourseDuration2.clear();
+                txtRegistrationFee.clear();
+                lblRegDate.setText("");
+                lblStuid.setText("");
+                lblCoucode.setText("");
+                cmbCourseCode.getSelectionModel().clearSelection();
+                cmbStudentID.getSelectionModel().clearSelection();
+                generateRegistrationId();
+            }else {
+                new Alert(Alert.AlertType.WARNING,
+                        "Someting Went Wrong ! Try Again", ButtonType.OK).show();}
         } finally {
 
         }
+    }
+    public void btnadd3OnAction(ActionEvent actionEvent) {
+        cmbStudentID.setDisable(false);
+        cmbCourseCode.setDisable(false);
+        txtStudentName2.setDisable(false);
+        txtCourseName2.setDisable(false);
+        txtCourseFee2.setDisable(false);
+        txtRegistrationFee.setDisable(false);
+        lblRegDate.setDisable(false);
+        lblStuid.setDisable(false);
+        lblCoucode.setDisable(false);
+        lblRegistrationID.setDisable(false);
+        btnRegistration.setDisable(false);
+        lblRegname.setDisable(false);
+        generateRegistrationId();
+
+        txtStudentName2.clear();
+        txtCourseName2.clear();
+        txtCourseFee2.clear();
+        txtCourseDuration2.clear();
+        txtRegistrationFee.clear();
+        lblRegDate.setText("Reg Date");
+        lblStuid.setText("Student ID");
+        lblCoucode.setText("Course Code");
+        cmbCourseCode.getSelectionModel().clearSelection();
+        cmbStudentID.getSelectionModel().clearSelection();
+
     }
 
     /*cmb to feild--------------------------------------------------------------------------------------------*/
@@ -672,7 +760,7 @@ public class Royal_InstituteController implements Initializable {
             lblTime.setText(currentTime.getHour() + ":" + currentTime.getMinute() + ":" + currentTime.getSecond());
             lblTime2.setText(currentTime.getHour() + ":" + currentTime.getMinute() + ":" + currentTime.getSecond());
             lblTime3.setText(currentTime.getHour() + ":" + currentTime.getMinute() + ":" + currentTime.getSecond());
-            lblTime4.setText(currentTime.getHour() + ":" + currentTime.getMinute() + ":" + currentTime.getSecond());
+            /*lblTime4.setText(currentTime.getHour() + ":" + currentTime.getMinute() + ":" + currentTime.getSecond());*/
         }),
                 new KeyFrame(Duration.seconds(1))
         );
@@ -684,12 +772,51 @@ public class Royal_InstituteController implements Initializable {
             lblDate.setText(currentDate.getDayOfMonth() + "-" + currentDate.getMonthValue() + "-" + currentDate.getYear());
             lblDate2.setText(currentDate.getDayOfMonth() + "-" + currentDate.getMonthValue() + "-" + currentDate.getYear());
             lblDate3.setText(currentDate.getDayOfMonth() + "-" + currentDate.getMonthValue() + "-" + currentDate.getYear());
-            lblDate4.setText(currentDate.getDayOfMonth() + "-" + currentDate.getMonthValue() + "-" + currentDate.getYear());
+            /*lblDate4.setText(currentDate.getDayOfMonth() + "-" + currentDate.getMonthValue() + "-" + currentDate.getYear());*/
         }),
                 new KeyFrame(Duration.seconds(1))
         );
         date.setCycleCount(Animation.INDEFINITE);
         date.play();
     }
+    private void setLable() {
+        List<StudentDTO> allstudent = null;
+        try {
+            allstudent = studentBO.getAllStudents();
+        } catch (Exception e) {
+            System.out.println("lable");
+        }
+        lblStudentNum.setText("Number of Students :  "+String.valueOf(allstudent.size()));
+        lblStudentNum1.setText("Number of Students :  "+String.valueOf(allstudent.size()));
+    }
+    private void setLable1() {
+        List<CourseDTO> allcourse = null;
+        try {
+            allcourse = courseBO.getAllCourse();
+        } catch (Exception e) {
+            System.out.println("lable");
+        }
+        lblCourseNum.setText("Number of Courses :  "+String.valueOf(allcourse.size()));
+
+    }
+    private void setLable2() {
+        List<StudentDTO> allstudent = null;
+        try {
+            allstudent = studentBO.getAllStudents();
+        } catch (Exception e) {
+            System.out.println("lable");
+        }
+        lblStudentNum1.setText(String.valueOf(allstudent.size()));
+    }
+    private void setLable3() {
+        List<CourseDTO> allcourse = null;
+        try {
+            allcourse = courseBO.getAllCourse();
+        } catch (Exception e) {
+            System.out.println("lable");
+        }
+        lblCourseNum1.setText(String.valueOf(allcourse.size()));
+    }
+
 
 }
