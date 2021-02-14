@@ -5,10 +5,7 @@ import bo.BOType;
 import bo.custom.CourseBO;
 import bo.custom.RegistrationBO;
 import bo.custom.StudentBO;
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXComboBox;
-import com.jfoenix.controls.JFXTabPane;
-import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.controls.*;
 import dto.CourseDTO;
 import dto.RegistrationDTO;
 import dto.StudentDTO;
@@ -21,15 +18,21 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Paint;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.CourseTM;
 import model.RegistrationTM;
 import model.StudentTM;
 
+import javax.swing.text.html.ImageView;
+import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -53,7 +56,8 @@ public class Royal_InstituteController implements Initializable {
     public JFXTextField txtStudentName;
     public JFXTextField txtStudentAddress;
     public JFXTextField txtContact;
-    public JFXTextField txtDob;
+    /*public JFXTextField txtDob;*/
+    public JFXDatePicker txtDob;
     public JFXTextField txtGender;
     public JFXButton btnAdd;
     public JFXButton btnadd;
@@ -104,6 +108,10 @@ public class Royal_InstituteController implements Initializable {
     public Label lblRegDate;
     public Label lblStuid;
     public Label lblCoucode;
+    /*public ImageView imgLock;*/
+    public javafx.scene.image.ImageView imgLock;
+    public javafx.scene.image.ImageView imgLock2;
+    public javafx.scene.image.ImageView imgLock3;
 
 
 
@@ -240,7 +248,7 @@ public class Royal_InstituteController implements Initializable {
         txtStudentName.setText(tm.getStudent_name());
         txtStudentAddress.setText(tm.getAddress());
         txtContact.setText(tm.getContact());
-        txtDob.setText(tm.getDob());
+        txtDob.setValue(LocalDate.parse(tm.getDob()));
         txtGender.setText(tm.getGender());
     }
     private void setDataCourse(CourseTM tm){
@@ -313,7 +321,7 @@ public class Royal_InstituteController implements Initializable {
         String name = txtStudentName.getText();
         String address = txtStudentAddress.getText();
         String contact = txtContact.getText();
-        String dob = txtDob.getText();
+        String dob = txtDob.getValue()+"";
         String gender = txtGender.getText();
 
             if (Pattern.compile("^[A-z ]{1,50}$").matcher(txtStudentName.getText()).matches()){
@@ -324,7 +332,7 @@ public class Royal_InstituteController implements Initializable {
                 txtStudentName.getText(),
                 txtStudentAddress.getText(),
                 txtContact.getText(),
-                txtDob.getText(),
+                txtDob.getValue()+"",
                 txtGender.getText()
 
         ));
@@ -341,7 +349,7 @@ public class Royal_InstituteController implements Initializable {
             txtStudentName.clear();
             txtStudentAddress.clear();
             txtContact.clear();
-            txtDob.clear();
+            txtDob.getEditor().clear();
             txtGender.clear();
             generateStudentId();
             loadAllStudents();
@@ -372,7 +380,7 @@ public class Royal_InstituteController implements Initializable {
         String name = txtStudentName.getText();
         String address = txtStudentAddress.getText();
         String contact = txtContact.getText();
-        String dob = txtDob.getText();
+        String dob = txtDob.getValue()+"";
         String gender = txtGender.getText();
 
         if (Pattern.compile("^[A-z ]{1,50}$").matcher(txtStudentName.getText()).matches()){
@@ -382,7 +390,7 @@ public class Royal_InstituteController implements Initializable {
                 txtStudentName.getText(),
                 txtStudentAddress.getText(),
                 txtContact.getText(),
-                txtDob.getText(),
+                txtDob.getValue()+"",
                 txtGender.getText()
                 ));
                     if (name.trim().length() == 0 | address.trim().length() == 0 | contact.trim().length() == 0 | dob.trim().length() == 0 | gender.trim().length() == 0) {
@@ -397,7 +405,7 @@ public class Royal_InstituteController implements Initializable {
                         txtStudentName.clear();
                         txtStudentAddress.clear();
                         txtContact.clear();
-                        txtDob.clear();
+                        txtDob.getEditor().clear();
                         txtGender.clear();
                         generateStudentId();
                         loadAllStudents();
@@ -438,7 +446,7 @@ public class Royal_InstituteController implements Initializable {
                 txtStudentName.clear();
                 txtStudentAddress.clear();
                 txtContact.clear();
-                txtDob.clear();
+                txtDob.getEditor().clear();
                 txtGender.clear();
                 generateStudentId();
                 loadAllStudents();
@@ -463,7 +471,7 @@ public class Royal_InstituteController implements Initializable {
             txtStudentName.setText(studentDTO.getStudent_name());
             txtStudentAddress.setText(studentDTO.getAddress());
             txtContact.setText(studentDTO.getContact());
-            txtDob.setText(studentDTO.getDob());
+            txtDob.setValue(LocalDate.parse(studentDTO.getDob()));
             txtGender.setText(studentDTO.getGender());
 
         }
@@ -473,7 +481,7 @@ public class Royal_InstituteController implements Initializable {
         txtStudentName.clear();
         txtStudentAddress.clear();
         txtContact.clear();
-        txtDob.clear();
+        txtDob.getEditor().clear();
         txtGender.clear();
         txtStudentName.setDisable(false);
         txtStudentAddress.setDisable(false);
@@ -819,4 +827,18 @@ public class Royal_InstituteController implements Initializable {
     }
 
 
+    public void imgLockOnAction(MouseEvent mouseEvent) throws IOException {
+        Stage stage = (Stage) root.getScene().getWindow();
+        stage.setScene(new Scene(FXMLLoader.load(this.getClass().getResource("/view/LoginForm.fxml"))));
+    }
+
+    public void imgLock2OnAction(MouseEvent mouseEvent) throws IOException {
+        Stage stage = (Stage) root.getScene().getWindow();
+        stage.setScene(new Scene(FXMLLoader.load(this.getClass().getResource("/view/LoginForm.fxml"))));
+    }
+
+    public void imgLock3OnAction(MouseEvent mouseEvent) throws IOException {
+        Stage stage = (Stage) root.getScene().getWindow();
+        stage.setScene(new Scene(FXMLLoader.load(this.getClass().getResource("/view/LoginForm.fxml"))));
+    }
 }
